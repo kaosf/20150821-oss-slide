@@ -91,6 +91,20 @@ rbenv rehash
 rails new twcopy</code></pre>
 <p>プロジェクトの初期の作成はこれでOK</p>
 </div>
+<div id="サーバプロセスの走らせ方" class="slide section level1">
+<h1>サーバプロセスの走らせ方</h1>
+<pre class="sh"><code>rails s
+# rails server でもOK (rails s は短縮された形)</code></pre>
+<p>localhost以外で走らせる場合は</p>
+<pre class="sh"><code>rails s -b 0.0.0.0</code></pre>
+<h2 id="参考">参考</h2>
+<p><a href="http://qiita.com/mizoki/items/d3bdef3be252ece425b9">Ruby - Rails 4.2.0のrails serverにアクセスできない - Qiita</a></p>
+</div>
+<div id="その他コマンド" class="slide section level1">
+<h1>その他コマンド</h1>
+<pre class="sh"><code>rails c # Rubyのインタプリタ起動
+# rails console でもOK (rails c は短縮された形)</code></pre>
+</div>
 <div id="まずrspecとfactorygirlを使うようにする" class="slide section level1">
 <h1>まずRSpecとFactoryGirlを使うようにする</h1>
 <p>今回は実際に活用することは無いがデフォルトで使うようにしておく</p>
@@ -113,7 +127,7 @@ gem <span class="st">&#39;factory_girl_rails&#39;</span>, <span class="st">&#39;
 </div>
 <div id="rspec-railsとfactory_girl_rails" class="slide section level1">
 <h1><code>rspec-rails</code>と<code>factory_girl_rails</code></h1>
-<h2 id="参考">参考</h2>
+<h2 id="参考-1">参考</h2>
 <ul>
 <li>
 <a href="https://github.com/rspec/rspec-rails">rspec/rspec-rails</a>
@@ -139,7 +153,7 @@ gem <span class="st">&#39;factory_girl_rails&#39;</span>, <span class="st">&#39;
 <p>Gemfile内の<code>group :development, :test do ... end</code>のブロック内には<strong>書かない</strong></p>
 <div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;twitter-bootstrap-rails&#39;</span>, <span class="st">&#39;3.2.0&#39;</span></code></pre></div>
 <p><code>bundle install</code>も忘れずに</p>
-<h2 id="参考-1">参考</h2>
+<h2 id="参考-2">参考</h2>
 <ul>
 <li>
 <a href="https://github.com/seyhunak/twitter-bootstrap-rails">seyhunak/twitter-bootstrap-rails</a>
@@ -158,7 +172,7 @@ rails g bootstrap:install static</code></pre>
 <h1>Deviseを使う</h1>
 <p>ユーザ認証機能のためのgem</p>
 <div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;devise&#39;</span>, <span class="st">&#39;3.4.1&#39;</span></code></pre></div>
-<h2 id="参考-2">参考</h2>
+<h2 id="参考-3">参考</h2>
 <ul>
 <li>
 <a href="https://github.com/plataformatec/devise">plataformatec/devise</a>
@@ -289,7 +303,7 @@ BootstrapのCSS活用
 <code>btn</code> <code>btn-primary</code> <code>btn-danger</code>クラス
 </li>
 </ul>
-<h2 id="参考-3">参考</h2>
+<h2 id="参考-4">参考</h2>
 <ul>
 <li>
 <a href="http://getbootstrap.com/css/">CSS · Bootstrap</a>
@@ -300,7 +314,7 @@ BootstrapのCSS活用
 <h1>画像投稿機能を追加する</h1>
 <p>Paperclipというgemを使う</p>
 <div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;paperclip&#39;</span>, <span class="st">&#39;4.3.0&#39;</span></code></pre></div>
-<h2 id="参考-4">参考</h2>
+<h2 id="参考-5">参考</h2>
 <ul>
 <li>
 <a href="https://github.com/thoughtbot/paperclip">thoughtbot/paperclip</a>

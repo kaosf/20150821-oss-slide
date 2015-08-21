@@ -36,6 +36,30 @@ rails new twcopy
 
 プロジェクトの初期の作成はこれでOK
 
+# サーバプロセスの走らせ方
+
+```sh
+rails s
+# rails server でもOK (rails s は短縮された形)
+```
+
+localhost以外で走らせる場合は
+
+```sh
+rails s -b 0.0.0.0
+```
+
+## 参考
+
+[Ruby - Rails 4.2.0のrails serverにアクセスできない - Qiita](http://qiita.com/mizoki/items/d3bdef3be252ece425b9)
+
+# その他コマンド
+
+```sh
+rails c # Rubyのインタプリタ起動
+# rails console でもOK (rails c は短縮された形)
+```
+
 # まずRSpecとFactoryGirlを使うようにする
 
 今回は実際に活用することは無いがデフォルトで使うようにしておく
