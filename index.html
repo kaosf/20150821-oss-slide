@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="ka (kaosfield)" />
+  <meta name="date" content="2015-08-21" />
+  <title>OSS普及協議会Ruby勉強会2</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">OSS普及協議会Ruby勉強会2</h1>
+  <p class="author">
+ka (<a href="http://www.kaosfield.net">kaosfield</a>)
+  </p>
+  <p class="date">2015-08-21</p>
+</div>
+<div id="はじめに" class="slide section level1">
+<h1>はじめに</h1>
+<p>このスライドは公開されています</p>
+<p>このスライドのリポジトリは<a href="https://github.com/kaosf/20150821-oss-slide" class="uri">https://github.com/kaosf/20150821-oss-slide</a>にあります</p>
+<p>間違いなどを見つけた場合は</p>
+<ul>
+<li>
+メールで連絡
+</li>
+<li>
+Issueで報告
+</li>
+<li>
+Pull Requestで修正案を提出
+</li>
+</ul>
+<p>などしていただけるとありがたいです (※下に行くほど嬉しいです)</p>
+</div>
+<div id="今回の進め方" class="slide section level1">
+<h1>今回の進め方</h1>
+<p>先にとあるリポジトリを用意しました</p>
+<p><a href="https://github.com/kaosf/20150821-oss-twcopy" class="uri">https://github.com/kaosf/20150821-oss-twcopy</a></p>
+<p>これを皆さんの手元でも再現してみるのが目標です</p>
+</div>
+<div id="rails" class="slide section level1">
+<h1>Rails</h1>
+<pre class="sh"><code>gem install rails -v 4.2.2
+rbenv rehash
+rails new twcopy</code></pre>
+<p>プロジェクトの初期の作成はこれでOK</p>
+</div>
+<div id="まずrspecとfactorygirlを使うようにする" class="slide section level1">
+<h1>まずRSpecとFactoryGirlを使うようにする</h1>
+<p>今回は実際に活用することは無いがデフォルトで使うようにしておく</p>
+<p>Gemfile内の<code>group :development, :test do ... end</code>のブロック内に</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">group <span class="st">:development</span>, <span class="st">:test</span> <span class="kw">do</span>
+  gem <span class="st">&#39;rspec-rails&#39;</span>, <span class="st">&#39;3.2.1&#39;</span>
+  gem <span class="st">&#39;factory_girl_rails&#39;</span>, <span class="st">&#39;4.5.0&#39;</span>
+<span class="kw">end</span></code></pre></div>
+<p>のように書く</p>
+</div>
+<div id="なんとか-rails-というgemを使う" class="slide section level1">
+<h1>なんとか-rails というgemを使う</h1>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;rspec&#39;</span>
+gem <span class="st">&#39;factory_girl&#39;</span></code></pre></div>
+<p>というgemもあるのだがこれは使わず</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;rspec-rails&#39;</span>, <span class="st">&#39;3.2.1&#39;</span>
+gem <span class="st">&#39;factory_girl_rails&#39;</span>, <span class="st">&#39;4.5.0&#39;</span></code></pre></div>
+<p>という名前の方を使うとRailsで使うにあたって楽が出来るようになる</p>
+<p>あとついでにバージョンも固定しておく</p>
+</div>
+<div id="rspec-railsとfactory_girl_rails" class="slide section level1">
+<h1><code>rspec-rails</code>と<code>factory_girl_rails</code></h1>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<a href="https://github.com/rspec/rspec-rails">rspec/rspec-rails</a>
+</li>
+<li>
+<a href="https://github.com/thoughtbot/factory_girl_rails">thoughtbot/factory_girl_rails</a>
+</li>
+</ul>
+</div>
+<div id="gemfile編集後" class="slide section level1">
+<h1>Gemfile編集後</h1>
+<pre class="sh"><code>bundle install</code></pre>
+<p>これでgemがインストール出来る</p>
+</div>
+<div id="rspecの使用準備" class="slide section level1">
+<h1>RSpecの使用準備</h1>
+<pre class="sh"><code>rails g rspec:install</code></pre>
+<p>必要なファイルが生成される</p>
+</div>
+<div id="bootstrapを使う" class="slide section level1">
+<h1>Bootstrapを使う</h1>
+<p>このgemは開発環境でも本番環境でも使うので</p>
+<p>Gemfile内の<code>group :development, :test do ... end</code>のブロック内には<strong>書かない</strong></p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;twitter-bootstrap-rails&#39;</span>, <span class="st">&#39;3.2.0&#39;</span></code></pre></div>
+<p><code>bundle install</code>も忘れずに</p>
+<h2 id="参考-1">参考</h2>
+<ul>
+<li>
+<a href="https://github.com/seyhunak/twitter-bootstrap-rails">seyhunak/twitter-bootstrap-rails</a>
+</li>
+</ul>
+</div>
+<div id="bootstrapの使用準備" class="slide section level1">
+<h1>Bootstrapの使用準備</h1>
+<pre class="sh"><code>rails g bootstrap:layout application
+rails g bootstrap:install static</code></pre>
+<p>上書きしますか？という問いにはYで答える</p>
+<p>これで既存の<code>views/layouts/application.html.erb</code>を上書き出来る</p>
+<p>JavaScriptやCSSも何もしなくてもちゃんとBootstrap用のものを使ってくれるようになる</p>
+</div>
+<div id="deviseを使う" class="slide section level1">
+<h1>Deviseを使う</h1>
+<p>ユーザ認証機能のためのgem</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;devise&#39;</span>, <span class="st">&#39;3.4.1&#39;</span></code></pre></div>
+<h2 id="参考-2">参考</h2>
+<ul>
+<li>
+<a href="https://github.com/plataformatec/devise">plataformatec/devise</a>
+</li>
+</ul>
+</div>
+<div id="deviseの使用準備とユーザモデルの作成" class="slide section level1">
+<h1>Deviseの使用準備とユーザモデルの作成</h1>
+<pre class="sh"><code>rails g devise:install
+rails g devise user name:string</code></pre>
+<p>これでmigrationファイルが作られるので</p>
+<pre class="sh"><code>rake db:migrate</code></pre>
+<p>でDBスキーマを変更</p>
+<p>ユーザ認証機能に必要なおおよそのカラムを勝手に作ってくれる</p>
+<p>巨人の肩に乗ろう</p>
+</div>
+<div id="独自のviewを使う" class="slide section level1">
+<h1>独自のViewを使う</h1>
+<p>Deviseはデフォルトでメールアドレスとパスワードを弄るViewを用意してくれる</p>
+<p>今回は<code>name</code>カラムがあるので独自のViewを使いたい</p>
+<p><code>config/initializers/devise.rb</code> を以下のように変更</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"><span class="st">-  # config.scoped_views = false</span>
+<span class="ot">+  config.scoped_views = true</span></code></pre></div>
+<p>その後</p>
+<pre class="sh"><code>rails g devise:views users</code></pre>
+</div>
+<div id="nameのためのformを追加する" class="slide section level1">
+<h1>nameのためのformを追加する</h1>
+<p><code>app/views/users/registrations/edit.html.erb</code> と<br />
+<code>app/views/users/registrations/new.html.erb</code> において</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"> &lt;%= form_for ... do |f| %&gt;
+ ...
+<span class="ot">+  &lt;div class=&quot;field&quot;&gt;</span>
+<span class="ot">+    &lt;%= f.label :name %&gt;&lt;br /&gt;</span>
+<span class="ot">+    &lt;%= f.text_field :name %&gt;</span>
+<span class="ot">+  &lt;/div&gt;</span>
+ ...
+ &lt;% end %&gt;</code></pre></div>
+<p>という変更を加える</p>
+</div>
+<div id="nameをフォームから受け取れるようにする" class="slide section level1">
+<h1>nameをフォームから受け取れるようにする</h1>
+<p>strong paramterという仕組みでサニタイズが行われるのがRailsのやり方</p>
+<p><code>app/controllers/application_controller.rb</code>に</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff">   protect_from_forgery with: :exception
+<span class="ot">+</span>
+<span class="ot">+  before_filter :configure_permitted_parameters, if: :devise_controller?</span>
+<span class="ot">+</span>
+<span class="ot">+  protected</span>
+<span class="ot">+</span>
+<span class="ot">+  def configure_permitted_parameters</span>
+<span class="ot">+    devise_parameter_sanitizer.for(:sign_up) &lt;&lt; :name</span>
+<span class="ot">+    devise_parameter_sanitizer.for(:account_update) &lt;&lt; :name</span>
+<span class="ot">+  end</span>
+ end</code></pre></div>
+<p>という変更を加える</p>
+</div>
+<div id="ルート-となる場所を作る" class="slide section level1">
+<h1>ルート (/) となる場所を作る</h1>
+<pre class="sh"><code>rails g controller home index</code></pre>
+<p><code>config/routes.rb</code>を変更</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"> Rails.application.routes.draw do
+<span class="ot">+  root to: &#39;home#index&#39;</span>
+ ...
+ end</code></pre></div>
+</div>
+<div id="tweetモデル-followingモデルを作る" class="slide section level1">
+<h1>Tweetモデル Followingモデルを作る</h1>
+<pre class="sh"><code>rails g model tweet body:string user:references
+rails g model following from_user:references to_user:references</code></pre>
+</div>
+<div id="not-null制約を付ける" class="slide section level1">
+<h1>NOT NULL制約を付ける</h1>
+<p>可能な限りNOT NULLは付けておいた方が良い</p>
+<p>生成されたmigrationファイルを以下の用に変更</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"><span class="st">-      t.string :body</span>
+<span class="st">-      t.references :user, index: true, foreign_key: true</span>
+<span class="ot">+      t.string :body, null: false</span>
+<span class="ot">+      t.references :user, index: true, foreign_key: true, null: false</span>
+
+<span class="st">-      t.references :from_user, index: true, foreign_key: true</span>
+<span class="st">-      t.references :to_user, index: true, foreign_key: true</span>
+<span class="ot">+      t.references :from_user, index: true, foreign_key: true, null: false</span>
+<span class="ot">+      t.references :to_user, index: true, foreign_key: true, null: false</span></code></pre></div>
+</div>
+<div id="各種機能を順次実装していく" class="slide section level1">
+<h1>各種機能を順次実装していく</h1>
+<p>ここまで来ればDBの方が変わらないので安心</p>
+<p>アプリケーションを思うように弄っていく</p>
+<p>ダメなら戻す(Gitなり何なりを活用しよう)</p>
+</div>
+<div id="実装する項目" class="slide section level1">
+<h1>実装する項目</h1>
+<ul>
+<li>
+<code>tweets_controller</code>の<code>create</code>
+</li>
+<li>
+<code>followings_controller</code>の<code>create</code>と<code>destroy</code>
+</li>
+<li>
+<code>User</code>と<code>Tweet</code>の一対多の関連
+</li>
+<li>
+<code>User</code>と<code>Following</code>の一対多の関連
+</li>
+<li>
+<code>has_many through: ...</code>で<code>User</code>と<code>User</code>の多対多の関連
+</li>
+<li>
+<code>friends_controller</code>の<code>index</code>
+</li>
+</ul>
+</div>
+<div id="デザイン" class="slide section level1">
+<h1>デザイン</h1>
+<ul>
+<li>
+BootstrapのCSS活用
+</li>
+<li>
+<code>container</code> <code>row</code> <code>col-XX-Y</code> クラス
+</li>
+<li>
+<code>table</code> <code>table-hovered</code>クラス
+</li>
+<li>
+<code>btn</code> <code>btn-primary</code> <code>btn-danger</code>クラス
+</li>
+</ul>
+<h2 id="参考-3">参考</h2>
+<ul>
+<li>
+<a href="http://getbootstrap.com/css/">CSS · Bootstrap</a>
+</li>
+</ul>
+</div>
+<div id="画像投稿機能を追加する" class="slide section level1">
+<h1>画像投稿機能を追加する</h1>
+<p>Paperclipというgemを使う</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby">gem <span class="st">&#39;paperclip&#39;</span>, <span class="st">&#39;4.3.0&#39;</span></code></pre></div>
+<h2 id="参考-4">参考</h2>
+<ul>
+<li>
+<a href="https://github.com/thoughtbot/paperclip">thoughtbot/paperclip</a>
+</li>
+</ul>
+</div>
+<div id="userモデルにiconを追加する" class="slide section level1">
+<h1><code>User</code>モデルに<code>icon</code>を追加する</h1>
+<pre class="sh"><code>rails g paperclip user icon</code></pre>
+<p>migrationファイルが生成されるので</p>
+<pre class="sh"><code>rake db:migrate</code></pre>
+</div>
+<div id="formをファイルアップロードが出来るようにする" class="slide section level1">
+<h1>formをファイルアップロードが出来るようにする</h1>
+<p><code>app/views/users/registrations/edit.html.erb</code> と<br />
+<code>app/views/users/registrations/new.html.erb</code> において<br />
+<code>name</code>を追加したときと同様に</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"><span class="ot">+  &lt;div class=&quot;field&quot;&gt;</span>
+<span class="ot">+    &lt;%= f.label :icon %&gt;&lt;br /&gt;</span>
+<span class="ot">+    &lt;%= f.file_field :icon %&gt;</span>
+<span class="ot">+  &lt;/div&gt;</span></code></pre></div>
+<p>を追加</p>
+</div>
+<div id="strong-parameter対策" class="slide section level1">
+<h1>strong parameter対策</h1>
+<p><code>name</code>のときと同様<code>app/controllers/application_controller.rb</code>を変更</p>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"> def configure_permitted_parameters
+   devise_parameter_sanitizer.for(:sign_up) &lt;&lt; :name
+<span class="ot">+  devise_parameter_sanitizer.for(:sign_up) &lt;&lt; :icon</span>
+   devise_parameter_sanitizer.for(:account_update) &lt;&lt; :name
+<span class="ot">+  devise_parameter_sanitizer.for(:account_update) &lt;&lt; :icon</span>
+ end</code></pre></div>
+</div>
+<div id="userモデル変更" class="slide section level1">
+<h1><code>User</code>モデル変更</h1>
+<div class="sourceCode"><pre class="sourceCode diff"><code class="sourceCode diff"> class User &lt; ActiveRecord::Base
+ ...
+<span class="ot">+  has_attached_file :icon</span>
+<span class="ot">+  validates_attachment_content_type :icon, content_type: [&#39;image/jpeg&#39;, &#39;image/jpg&#39;, &#39;image/png&#39;, &#39;image/gif&#39;]</span>
+ end</code></pre></div>
+<p>上記の2行を追記する</p>
+<p><code>content_type</code>は必要な分だけでも良い</p>
+<p>これでファイルアップロードの準備完了</p>
+</div>
+</body>
+</html>
+<!-- Pandoc version:
+pandoc 1.15.0.6
+Compiled with texmath 0.8.2, highlighting-kate 0.6.
+Syntax highlighting is supported for the following languages:
+    abc, actionscript, ada, agda, apache, asn1, asp, awk, bash, bibtex, boo, c,
+    changelog, clojure, cmake, coffee, coldfusion, commonlisp, cpp, cs, css,
+    curry, d, diff, djangotemplate, dockerfile, dot, doxygen, doxygenlua, dtd,
+    eiffel, email, erlang, fasm, fortran, fsharp, gcc, glsl, gnuassembler, go,
+    haskell, haxe, html, idris, ini, isocpp, java, javadoc, javascript, json,
+    jsp, julia, kotlin, latex, lex, lilypond, literatecurry, literatehaskell,
+    lua, m4, makefile, mandoc, markdown, mathematica, matlab, maxima, mediawiki,
+    metafont, mips, modelines, modula2, modula3, monobasic, nasm, noweb,
+    objectivec, objectivecpp, ocaml, octave, opencl, pascal, perl, php, pike,
+    postscript, prolog, pure, python, r, relaxng, relaxngcompact, rest, rhtml,
+    roff, ruby, rust, scala, scheme, sci, sed, sgml, sql, sqlmysql,
+    sqlpostgresql, tcl, tcsh, texinfo, verilog, vhdl, xml, xorg, xslt, xul,
+    yacc, yaml, zsh
+Default user data directory: <DELETED>
+Copyright (C) 2006-2015 John MacFarlane
+Web:  http://pandoc.org
+This is free software; see the source for copying conditions.
+There is no warranty, not even for merchantability or fitness
+for a particular purpose.
+-->
