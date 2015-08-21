@@ -29,7 +29,8 @@
 # Rails
 
 ```sh
-gem install rails -v 4.2.2
+#gem install rails -v 4.2.2
+gem install rails -v 4.2.2 --no-ri --no-rdoc
 rbenv rehash
 rails new twcopy
 ```
