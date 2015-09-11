@@ -138,6 +138,32 @@ gem <span class="st">&#39;factory_girl_rails&#39;</span>, <span class="st">&#39;
 </li>
 </ul>
 </div>
+<div id="javascript-runtime" class="slide section level1">
+<h1>JavaScript runtime</h1>
+<p>※当日この問題にブチ当たったので解決方法を書いておきます</p>
+<p>※これを適用せずに色々進めようとしてもJavaScript runtimeが無いですという感じのエラーが出てしまってどうしようもないです</p>
+</div>
+<div id="node.jsをインストールする" class="slide section level1">
+<h1>Node.jsをインストールする</h1>
+<p>筆者オススメ</p>
+<pre class="sh"><code>curl -L git.io/nodebrew | perl - setup
+echo &#39;export PATH=$HOME/.nodebrew/current/bin:$PATH&#39; &gt;&gt; $HOME/.zshenv # zshの人用
+echo &#39;export PATH=$HOME/.nodebrew/current/bin:$PATH&#39; &gt;&gt; $HOME/.profile
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+nodebrew install-binary 0.12
+nodebrew use latest</code></pre>
+</div>
+<div id="therubyracerを依存に含める" class="slide section level1">
+<h1>therubyracerを依存に含める</h1>
+<p><code>Gemfile</code>の中に</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span class="co"># See https://github.com/rails/execjs#readme for more supported runtimes</span>
+<span class="co"># gem &#39;therubyracer&#39;, platforms: :ruby</span></code></pre></div>
+<p>という行がある</p>
+<p>これのコメントアウトを外し</p>
+<div class="sourceCode"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span class="co"># See https://github.com/rails/execjs#readme for more supported runtimes</span>
+gem <span class="st">&#39;therubyracer&#39;</span>, <span class="st">platforms: :ruby</span></code></pre></div>
+<p>改めて<code>bundle install</code>を行う</p>
+</div>
 <div id="gemfile編集後" class="slide section level1">
 <h1>Gemfile編集後</h1>
 <pre class="sh"><code>bundle install</code></pre>

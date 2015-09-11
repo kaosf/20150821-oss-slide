@@ -103,6 +103,44 @@ gem 'factory_girl_rails', '4.5.0'
 <li>[thoughtbot/factory_girl_rails](https://github.com/thoughtbot/factory_girl_rails)</li>
 </ul>
 
+# JavaScript runtime
+
+※当日この問題にブチ当たったので解決方法を書いておきます
+
+※これを適用せずに色々進めようとしてもJavaScript runtimeが無いですという感じのエラーが出てしまってどうしようもないです
+
+# Node.jsをインストールする
+
+筆者オススメ
+
+```sh
+curl -L git.io/nodebrew | perl - setup
+echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> $HOME/.zshenv # zshの人用
+echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> $HOME/.profile
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+nodebrew install-binary 0.12
+nodebrew use latest
+```
+
+# therubyracerを依存に含める
+
+`Gemfile`の中に
+
+```ruby
+# See https://github.com/rails/execjs#readme for more supported runtimes
+# gem 'therubyracer', platforms: :ruby
+```
+
+という行がある
+
+これのコメントアウトを外し
+
+```ruby
+# See https://github.com/rails/execjs#readme for more supported runtimes
+gem 'therubyracer', platforms: :ruby
+```
+
+改めて`bundle install`を行う
 
 # Gemfile編集後
 
